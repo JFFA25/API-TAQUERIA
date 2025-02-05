@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <style>
+         h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        .title {
+            padding: 2px;
+            background-color: rgba(73, 5, 62, 0.767);
+
+        }
+    </style>
+    <title>Taqueria Arroyo</title>
+</head>
+<body>
+      <div data-role="page">
+            <div data-role="header">
+                <div data-role="navbar">
+                     <div class="title">
+                <h1>Taqueria Arroyo</h1>
+            </div>
+                    <ul>
+                        <li><a href="#page1" data-icon="home">Inicio</a></li>
+                        <li><a href="#page2" data-icon="star" class="ui-btn-active">Tacos</a></li>
+                        <li><a href="#page3" data-icon="eye">Menu</a></li>
+                    </ul>
+                    </div>
+            </div>
+            <div data-role="content">
+                <form action="/<%= taco.no_orden %>" method="POST">
+                    <label for="txt_codigo_barras">Numero de Orden:</label>
+                    <input type="text" name="no_orden" id="txt_no_orden" placeholder="Numero de Orden" value="<%= taco.no_orden %>">
+
+                    <label for="txt_descripcion">Descripcion:</label>
+                    <input type="text" name="descripcion" id="txt_descripcion" placeholder="Descripcion" value="<%= taco.descripcion %>">
+                    
+                    <label for="txt_price">Cantidad:</label>
+                    <input type="number" name="cantidad" id="txt_cantidad" placeholder="Cantidad de tacos" value="<%= taco.cantidad %>">
+                    
+                    <label for="txt_cost">Total de la Orden:</label>
+                    <input type="number" name="total" id="txt_total" placeholder="Total" value="<%= taco.total %>">
+                    
+                    <label for="flip-6">Cilantro:</label>
+                    <select name="cilantro" id="flip-6" data-role="slider" data-mini="true">
+                        <option value="0" <%= taco.cilantro === 0 ? "selected" : "" %> >No</option>
+                        <option value="1" <%= taco.cilantro === 1 ? "selected" : "" %> >Si</option>
+                    </select>
+                    
+                    <label for="flip-6">Cebolla:</label>
+                    <select name="cebolla" id="flip-6" data-role="slider" data-mini="true">
+                        <option value="0" <%= taco.cebolla === 0 ? "selected" : "" %> >No</option>
+                        <option value="1" <%= taco.cebolla === 1 ? "selected" : "" %> >Si</option>
+                    </select>
+                    
+                    <label for="controlgroup">Salsa:</label>
+                    <fieldset data-role="controlgroup" data-mini="true">
+                        <input type="radio" name="radio-choice-v-8" id="radio-choice-v-8a" value="0" <%= taco.salsa === 0 ? "checked='checked'" : "" %>>
+                        <label for="radio-choice-v-8a">No</label>
+                        
+                        <input type="radio" name="radio-choice-v-8" id="radio-choice-v-8b" value="1" <%= taco.salsa === 1 ? "checked='checked'" : "" %>>
+                        <label for="radio-choice-v-8b">Verde</label>
+                        
+                        <input type="radio" name="radio-choice-v-8" id="radio-choice-v-8c" value="2" <%= taco.salsa === 2 ? "checked='checked'" : "" %>>
+                        <label for="radio-choice-v-8c">Roja</label>
+                    </fieldset>
+                    
+                    
+                    <button type="submit" id="submit-6" class="ui-shadow ui-btn ui-corner-all ui-mini">Guardar</button>
+                    
+                </form>
+            </div>
+            <div data-role="footer">
+                <h5>Developend by Arroyo</h5>
+            </div>
+      </div>
+</body>
+</html>

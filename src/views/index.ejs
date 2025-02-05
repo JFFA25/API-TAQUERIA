@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <title>Taqueria Arroyo</title>
+    <style>
+        body {
+            background-color: #3b0f27;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .title {
+            padding: 2px;
+            background-color: rgba(53, 3, 41, 0.918);
+
+        }
+
+        .content-imgage {
+            text-align: center;
+        }
+
+        img {
+            display: inline-block;
+            width: 50%;
+            height: 200px;
+        }
+
+        .content {
+            background-color: #0f3b36;
+        }
+
+        .info-div {
+            padding: 20px;
+            text-align: center;
+            max-width: 300px;
+            margin: 20px auto;
+            background-color: #ffbc9d;
+            border-radius: 5px;
+            display: none;
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome {
+            text-align: center;
+            color: #ffffff;
+            font-size: 1.5em;
+            padding: 20px;
+            background-color: #45e3ff;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .viewMovies {
+            text-decoration: none;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .wheel {
+            position: absolute;
+            bottom: 0;
+            left: -50%;
+            width: 100px;
+            height: 100px;
+            background-color: #333;
+            border-radius: 50%;
+            animation: rollAndSpin 3s linear infinite;
+        }
+
+        .spike {
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            background-color: #fff;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform-origin: bottom;
+            animation: spikeAnimation 3s linear infinite;
+        }
+
+        @keyframes rollAndSpin {
+
+            0%,
+            25% {
+                left: -50%;
+                transform: rotate(0deg);
+            }
+
+            50%,
+            75% {
+                left: 150%;
+                transform: rotate(180deg);
+            }
+
+            100% {
+                left: -50%;
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spikeAnimation {
+
+            0%,
+            100% {
+                height: 20px;
+            }
+
+            50% {
+                height: 40px;
+            }
+        }
+
+        /* A bit custom styling */
+        .my-page .ui-listview li .ui-button p {
+            color: #c0c0c0;
+        }
+
+        .my-page .ui-listview li .ui-button .ui-listview-item-aside {
+            color: #eee;
+        }
+
+        /* First breakpoint is 48em (768px). 3 column layout. Tiles 250x250 pixels incl. margin at the breakpoint. */
+        @media (min-width: 48em) {
+            .my-page .ui-content {
+                padding: .5625em;
+                /* 9px */
+            }
+
+            .my-page .ui-listview li {
+                float: left;
+                width: 30.9333%;
+                /* 33.3333% incl. 2 x 1.2% margin */
+                height: 14.5em;
+                /* 232p */
+                margin: .5625em 1.2%;
+            }
+
+            .my-page .ui-listview li>.ui-button {
+                -webkit-box-sizing: border-box;
+                /* include padding and border in height so we can set it to 100% */
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                height: 100%;
+            }
+
+            .my-page .ui-listview li.ui-listview-item-has-thumbnail .ui-listview-item-thumbnail {
+                height: auto;
+                /* To keep aspect ratio. */
+                max-width: 100%;
+                max-height: none;
+            }
+
+            /* Make all list items and anchors inherit the border-radius from the UL. */
+            .my-page .ui-listview li,
+            .my-page .ui-listview li .ui-button,
+            .my-page .ui-listview .ui-listview-item-thumbnail {
+                -webkit-border-radius: inherit;
+                border-radius: inherit;
+            }
+
+            /* Hide the icon */
+            .my-page .ui-listview .ui-icon-end:after {
+                display: none;
+            }
+
+            /* Make text wrap. */
+            .my-page .ui-listview h2,
+            .my-page .ui-listview p {
+                white-space: normal;
+                overflow: visible;
+                position: absolute;
+                left: 0;
+                right: 0;
+            }
+
+            /* Text position */
+            .my-page .ui-listview h2 {
+                font-size: 1.25em;
+                margin: 0;
+                padding: .125em 1em;
+                bottom: 50%;
+            }
+
+            .my-page .ui-listview p {
+                font-size: 1em;
+                margin: 0;
+                padding: 0 1.25em;
+                min-height: 50%;
+                bottom: 0;
+            }
+
+            /* Semi transparent background and different position if there is a thumb. The button has overflow hidden so we don't need to set border-radius. */
+            .ui-listview .ui-listview-item-has-thumbnail h2,
+            .ui-listview .ui-listview-item-has-thumbnail p {
+                background: #111;
+                background: rgba(0, 0, 0, .8);
+            }
+
+            .ui-listview .ui-listview-item-has-thumbnail h2 {
+                bottom: 35%;
+            }
+
+            .ui-listview .ui-listview-item-has-thumbnail p {
+                min-height: 35%;
+            }
+
+            .my-page .ui-listview .ui-listview-item-aside {
+                padding: .125em .625em;
+                width: auto;
+                min-height: 0;
+                top: 0;
+                left: auto;
+                bottom: auto;
+                /* Custom styling. */
+                background: #990099;
+                background: rgba(153, 0, 153, .85);
+                -webkit-border-top-right-radius: inherit;
+                border-top-right-radius: inherit;
+                -webkit-border-bottom-left-radius: inherit;
+                border-bottom-left-radius: inherit;
+                -webkit-border-bottom-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            /* If you want to add shadow, don't kill the focus style. */
+            .my-page .ui-listview li {
+                -moz-box-shadow: 0px 0px 9px #111;
+                -webkit-box-shadow: 0px 0px 9px #111;
+                box-shadow: 0px 0px 9px #111;
+            }
+
+            /* Images mask the hover bg color so we give desktop users feedback by applying the focus style on hover as well. */
+            .my-page .ui-listview li>.ui-button:hover {
+                -moz-box-shadow: 0px 0px 12px #33ccff;
+                -webkit-box-shadow: 0px 0px 12px #33ccff;
+                box-shadow: 0px 0px 12px #33ccff;
+            }
+
+            /* Animate focus and hover style, and resizing. */
+            .my-page .ui-listview li,
+            .my-page .ui-listview .ui-button {
+                -webkit-transition: all 500ms ease;
+                -moz-transition: all 500ms ease;
+                -o-transition: all 500ms ease;
+                -ms-transition: all 500ms ease;
+                transition: all 500ms ease;
+            }
+        }
+
+        /* Second breakpoint is 63.75em (1020px). 4 column layout. Tiles will be 250x250 pixels incl. margin again at the breakpoint. */
+        @media (min-width: 63.75em) {
+            .my-page .ui-content {
+                padding: .625em;
+                /* 10px */
+            }
+
+            /* Set a max-width for the last breakpoint to prevent too much stretching on large screens.
+    By setting the max-width equal to the breakpoint width minus padding we keep square tiles. */
+            .my-page .ui-listview {
+                max-width: 62.5em;
+                /* 1000px */
+                margin: 0 auto;
+            }
+
+            /* Because of the 1000px max-width the width will always be 230px (and margin left/right 10px),
+    but we stick to percentage values for demo purposes. */
+            .my-page .ui-listview li {
+                width: 23%;
+                height: 230px;
+                margin: .625em 1%;
+            }
+        }
+
+        input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 0px;
+    border: 2px solid #ffffff; /* Color del borde */
+    border-radius: 5px; /* Radio del borde */
+    box-sizing: border-box;
+    color: #000000; /* Color del texto */
+    background-color: #cfffd1;
+}
+
+/* Estilo para las etiquetas de los campos */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #000000; /* Color del texto */
+}
+
+/* Estilo para el botón */
+button {
+    background-color: #2b485c; /* Color de fondo del botón */
+    color: #000000; /* Color del texto del botón */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilo para el botón al pasar el ratón (hover) */
+button:hover {
+    background-color: #2980b9; /* Cambia el color de fondo al pasar el ratón */
+}
+
+/* Estilo para el botón activo (focus) */
+button:focus {
+    outline: none;
+}
+
+/* Estilo para el mensaje de error (puedes personalizar según tus necesidades) */
+.error-message {
+    color: #e74c3c; /* Color del texto del mensaje de error */
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+
+        /* For this demo we used images with a size of 310x310 pixels. Just before the second breakpoint the images reach their max width: 1019px - 2 x 9px padding = 1001px x 30.9333% = ~310px */
+    </style>
+</head>
+
+<body>
+
+    <!-- -------------------------Pagina Inicio------------------ -->
+    <div data-role="page" id="page1">
+        <div data-role="header">
+            <div class="title">
+                <h1>Taqueria Arroyo</h1>
+            </div>
+            <div data-role="footer">
+                <div class="navbar" data-role="navbar">
+                    <ul>
+                        <li><a href="#page1" data-icon="home" class="ui-btn-active">Inicio</a></li>
+                        <li><a href="#page2" data-icon="star">Tacos</a></li>
+                        <li><a href="#page3" data-icon="eye">Menu</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="content">
+            <p class="welcome">La mejor Taqueria de todo Mexico!!!!!</p>
+            <div class="info-div" id="infoDiv1">
+                <h3>Nuestro Maravilloso Menu</h3>
+                <p>Excelente variedad de tacos de muchos sabores y muy deliciosos</p>
+                <a href="#page3" class="viewMovies">Ver mas</a>
+                <a href="#" class="ui-btn ui-btn-b ui-corner-all"
+                    onclick="closeInfoDiv('infoDiv1')">Cerrar</a>
+            </div>
+            <a href="#" class="ui-btn ui-btn-b ui-corner-all" onclick="openInfoDiv('infoDiv1')">Mira nuestro menu</a>
+
+            <div class="info-div" id="infoDiv2">
+                <h3>TACOPROMOCIONES</h3>
+                <p>Ordena 4 tacos al pastor y 4 de bistec y gana 2 refrescos gratis</p>
+                <a href="#" class="ui-btn ui-btn-b ui-corner-all"
+                    onclick="closeInfoDiv('infoDiv2')">Cerrar</a>
+            </div>
+            <a href="#" class="ui-btn ui-btn-b ui-corner-all" onclick="openInfoDiv('infoDiv2')">Promociones</a>
+
+            <div class="info-div" id="infoDiv3">
+                <h3>Ordenar</h3>
+                <p>Compra tu boleto para nuestras Peliculas</p>
+                <a href="#page2" class="viewMovies">Ver mas</a>
+                <a href="#" class="ui-btn ui-btn-b ui-corner-all"
+                    onclick="closeInfoDiv('infoDiv3')">Cerrar</a>
+            </div>
+            <a href="#" class="ui-btn ui-btn-b ui-corner-all" onclick="openInfoDiv('infoDiv3')">Ordena Aqui</a>
+            <div data-role="collapsibleset" data-filter="true" data-children="> div, > div div ul li" data-inset="true" id="collapsiblesetForFilterChildren" data-input="#searchForCollapsibleSetChildren">
+                <% tacos.forEach((taco) => { %>
+                    <div data-role="collapsible" data-filtertext="<%= taco.descripcion %>">
+                        <h3><%= taco.descripcion %></h3>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <p>Numero de Orden: <%= taco.no_orden %></p>
+                                <p>Cantidad: <%= taco.cantidad %></p>
+                                <p>Descripcion: <%= taco.descripcion %></p>
+                            </div>
+                            <div class="ui-block-b">
+                                <p>Cilantro: <%= taco.cilantro %></p>
+                                <p>Cebolla: <%= taco.cebolla %></p>
+                                <p>Salsa: <%= taco.salsa %></p>
+                            </div>
+                        </div>
+                        <p>Total: <%= taco.total %></p>
+                        <a href="/<%= taco.no_orden %>" class="ui-btn">Editar</a>
+                        <a href="/delete/<%= taco.no_orden %>" class="ui-btn">Eliminar</a>
+                    </div>
+                <% }) %>
+            </div>
+                    
+
+        </div>
+
+        <script>
+            function openInfoDiv(divId) {
+                $("#" + divId).fadeIn();
+            }
+
+            function closeInfoDiv(divId) {
+                $("#" + divId).fadeOut();
+            }
+        </script>
+    </div>
+
+
+    <!-- -----------------------------Pagina Tacos----------------------- -->
+    <div data-role="page" id="page2">
+        <div data-role="header">
+            <div class="title">
+                <h1>Taqueria Arroyo</h1>
+            </div>
+            <div data-role="footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#page1" data-icon="home">Inicio</a></li>
+                        <li><a href="#page2" data-icon="star" class="ui-btn-active">Tacos</a></li>
+                        <li><a href="#page3" data-icon="eye">Menu</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-role="content">
+            <form action="/" method="POST">
+                <input type="number" name="no_orden" id="txt_no_orden" placeholder="Numero de Orden">
+
+                <input type="Number" name="cantidad" id="txt_cantidad" placeholder="Cantidad">
+
+                <input type="text" name="descripcion" id="txt_descripcion" placeholder="Descripcion">
+
+                <label for="flip-6">Cilantro:</label>
+                <select name="cilantro" id="flip-6" data-role="slider" data-mini="true">
+                    <option value="0">No</option>
+                    <option value="1">Si</option>
+                </select>
+
+                <label for="flip-6">Cebolla:</label>
+                <select name="cebolla" id="flip-6" data-role="slider" data-mini="true">
+                    <option value="0">No</option>
+                    <option value="1">Si</option>
+                </select>
+
+                <label for="controlgroup">Salsa:</label>
+                <fieldset data-role="controlgroup" data-mini="true">
+                    <input type="radio" name="radio-choice-v-8" id="radio-choice-v-8a" value="0" checked="checked">
+                    <label for="radio-choice-v-8a">No</label>
+                    <input type="radio" name="radio-choice-v-8" id="radio-choice-v-8b" value="1">
+                    <label for="radio-choice-v-8b">Verde</label>
+                    <input type="radio" name="radio-choice-v-8" id="radio-choice-v-8c" value="2">
+                    <label for="radio-choice-v-8c">Roja</label>
+                </fieldset>
+
+                <input type="number" name="total" id="txt_total" placeholder="Total">
+
+
+                <button type="submit" id="submit-6" class="ui-shadow ui-btn ui-corner-all ui-mini">Guardar</button>
+            </form>
+
+        </div>
+        <div data-role="footer">
+            <h5>Developend by Arroyo</h5>
+        </div>
+    </div>
+    </div>
+
+    <!--  ----------------------- Pagina Menu ------------ -->
+
+    <div data-role="page" id="page3" data-theme="b" class="my-page" data-url="demo-page">
+
+        <div data-role="header">
+            <div class="title">
+                <h1>Taqueria Arroyo</h1>
+            </div>
+            <div data-role="footer">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#page1" data-icon="home">Inicio</a></li>
+                        <li><a href="#page2" data-icon="tag">Tacos</a></li>
+                        <li><a href="#page3" data-icon="eye" class="ui-btn-active">Menu</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <di v role="main" class="ui-content">
+            <ul data-role="listview" data-inset="true">
+                <li><a href="#">
+                        <img src="https://lomaculinaria.com/wp-content/uploads/2023/08/Tacos-al-Pastor-Culinary-Hill-1200x800-1.webp"
+                            class="ui-listview-item-thumbnail">
+                        <h2>Tacos de Pastor</h2>
+                        <p>Ricos tacos con piña y carne de alta calidad</p>
+                        <p class="ui-listview-item-aside">$35 Orden</p>
+                    </a></li>
+                <li><a href="#">
+                        <img src="https://storage.googleapis.com/avena-recipes/2019/10/1571780969333.jpeg"
+                            class="ui-listview-item-thumbnail">
+                        <h2>Tacos de Bistec</h2>
+                        <p>Deliciosos tacos de bistec son toque personal del chef</p>
+                        <p class="ui-listview-item-aside">$30 Orden</p>
+                    </a></li>
+                <li><a href="#">
+                        <img src="https://i.ytimg.com/vi/QjNO3T9YgxA/maxresdefault.jpg"
+                            class="ui-listview-item-thumbnail">
+                        <h2>Tacos de Pollo</h2>
+                        <p>Excelentes tacos de pollo los mas rico de la region</p>
+                        <p class="ui-listview-item-aside">$30 Orden</p>
+                    </a></li>
+                <li><a href="#">
+                        <img src="https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2019/05/tacos-de-chorizo-con-vino.jpg"
+                            class="ui-listview-item-thumbnail">
+                        <h2>Tacos de Chorizo</h2>
+                        <p>Carne de alta calidad para hacer estos deliciosos tacos</p>
+                        <p class="ui-listview-item-aside">$35 Orden</p>
+                    </a></li>
+                <li><a href="#">
+                        <img src="https://i.ytimg.com/vi/VF7gp13pUPc/maxresdefault.jpg"
+                            class="ui-listview-item-thumbnail">
+                        <h2>Tacos de Carne enchilada</h2>
+                        <p>Exportada desde otro estado para hacer simplemente a estos tacos los mejores</p>
+                        <p class="ui-listview-item-aside">$30 Orden</p>
+                    </a></li>
+                <li><a href="#">
+                        <img src="https://i.pinimg.com/originals/15/67/22/1567223a54c042f67b39a1036e531f4c.jpg"
+                            class="ui-listview-item-thumbnail">
+                        <h2>Tacos de Cueritos</h2>
+                        <p>Ricos tacos de cueritos que te dejaran con hambre de mas</p>
+                        <p class="ui-listview-item-aside">$20 Orden</p>
+                    </a></li>
+            </ul>
+    </div><!-- /content -->
+
+    </div>
+
+
+</body>
+
+</html>
